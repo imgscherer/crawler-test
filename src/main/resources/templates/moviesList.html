@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<head th:replace="header :: header"></head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Rate</th>
+							<th class="col-xs-4">Name</th>
+							<th class="col-xs-2">Directors</th>
+							<th class="col-xs-4">Positives Comments</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="movie,count: ${moviesList}">
+							<td th:text="${count.count}" class="col-xs-1"></td>
+							<td th:text="${movie.rate}" style="font-weight: bold;color:#B8860B;" class="col-xs-1"></td>	
+							<td class="col-xs-3">
+								<h4 style="font-color:#afaeae" th:text="${movie.name}"></h4>
+								<div style="border-bottom: 1px solid #ddd;margin-bottom:5px;"></div>
+								<p><i>Cast</i></p>
+								<table>
+									<tr th:each="actor:${movie.cast}" style="margin-bottom:15px;" class="col-xs-12">
+										<td class="pull-left" th:text="${actor}"></td>
+									</tr>
+								</table>
+							</td>
+							<td th:text="${movie.director}" class="col-xs-2"></td>
+							<td class="col-xs-5">
+								<div th:each="comment:${movie.comment}" th:if="${comment} !=null">
+										<small style="font-weight: bold;color:#B8860B;" th:text="${comment.rate}"> - </small>
+										<a data-target="#commentModal" href="#"
+											th:attr="data-title=${comment.title},data-content=${comment.content},data-author=${comment.author},data-rate=${comment.rate}" data-toggle="modal" 
+											style="font-weight: bold;color:black;font-size:12px;" th:text="${comment.title}">
+										</a>
+								</div>
+								<small style="font-weight: bold;" th:if="${#lists.size(movie.comment)} == 0">No positive comments</small>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragments/comment :: commentModal"></div>
+	
+	
+	
+	
+	
+	
+</body>
+
+</html>
