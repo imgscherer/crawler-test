@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,6 +25,7 @@ public class MovieServiceImplementation implements MovieServiceInterface {
         Document document = service.initialize(path, language);
         Elements bodyTable = document.select("tbody[class='lister-list']");
         List<Movie> moviesList = addMovieNamesAndRating(bodyTable);
+        Collections.reverse(moviesList);
         List <Movie> top10MoviesList =  moviesList.subList(0, 10);
         return addDetailsToMovie(top10MoviesList);
     }
